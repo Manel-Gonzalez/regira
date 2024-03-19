@@ -55,9 +55,9 @@ export default () => {
 
 
 
-        <div className="w-full max-w-xs m-auto">
-            <form onSubmit={logueja} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <h1 className="text-center">Login</h1>
+        <div className="col-start-2 col-end-7 max-w-xs m-auto shadow-lg shadow-neutral-800 border-2 rounded-md border-amber-400">
+            <form onSubmit={logueja} className="bg-white shadow-md rounded p-8 w-100">
+                <h1 className="text-center text-2xl font-rock font-bold">Login</h1>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                         Email
@@ -77,11 +77,11 @@ export default () => {
                     rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
                 </div>
                 <div className="text-center flex flex-row gap-4 justify-center">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    <button className="shadow-md shadow-neutral-800 bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         Entrar
                     </button>
                    
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={()=>redirect('/register')}>
+                    <button className="shadow-md shadow-neutral-800 bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={()=>redirect('/register')}>
                         Registrar
                     </button>
                 </div>

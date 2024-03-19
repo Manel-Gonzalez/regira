@@ -3,9 +3,13 @@ import {DndProvider, useDrag, useDrop} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {useParams, useNavigate} from "react-router-dom";
 import IssueCard from "./IssueCard";
+import Modal from "./Components/Modal/Modal.jsx"
+
 import Contexte from "./Contexte";
 
 const ItemType = "ISSUE_ITEM";
+
+
 
 const CAIXES = [
   {state: "backlog", titol: "Pendent"},
@@ -16,20 +20,30 @@ const CAIXES = [
   {state: "done", titol: "Fet"},
 ];
 
-const Item = ({eliminaItem, data}) => {
+/* const [isModalShowed,setModalShowed] = useState(false)
+
+const coso = () => {
+  setModalShowed(!isModalShowed)
+  console.log('from card click',isModalShowed);
+} */
+
+const Item = ({eliminaItem, data,setModal}) => {
   const [{isDragging}, drag_ref] = useDrag({
     type: ItemType,
     item: {type: ItemType, id: data.id},
   });
+
   return (
     <IssueCard
       reference={drag_ref}
       isDragging={isDragging}
       data={data}
       remove={eliminaItem}
+      setModal={setModal}
     />
   );
 };
+
 
 const Box = ({children, caixa, mouItem}) => {
   const [{isOver}, drop_ref] = useDrop({
@@ -45,10 +59,10 @@ const Box = ({children, caixa, mouItem}) => {
   return (
     <div
       ref={drop_ref}
-      className={`bg-slate-100 p-8 min-h-[400px] border ${
-        isOver ? "bg-blue-500" : ""
-      }`}
+      dir=""
+      className={`border rounded-md border-amber-400 p-8 min-h-[400px] shadow-inner shadow-slate-400  ${isOver ? "bg-blue-200 bg-opacity-70" : ""}`}
     >
+
       <h2 className="text-xl text-center mb-4">{caixa.titol}</h2>
       {children}
     </div>
@@ -59,6 +73,9 @@ export default () => {
   const [error, setError] = useState("");
   const redirect = useNavigate();
   const [actualitza, setActualitza] = useState(0);
+  const [modal,setModal]=useState(false)
+  const[projecteModal,setProjecteModal]=useState(null)
+
 
   let {id} = useParams();
 
@@ -100,6 +117,13 @@ export default () => {
       .catch((err) => console.log(err));
   };
 
+  useEffect(()=> {
+    if(modal > 0){
+      setProjecteModal(projecte?.find((p)=> (p.id == modal))) 
+
+    }
+  },[modal])
+
   useEffect(() => {
     const opcions = {
       credentials: "include",
@@ -121,6 +145,7 @@ export default () => {
         setError(err);
       });
   }, [actualitza]);
+  console.log('1',projecte)
 
   if (error) {
     return <h1 className="text-red-500">{error}</h1>;
@@ -129,32 +154,33 @@ export default () => {
   if (!projecte) {
     return <h1>Loading...</h1>;
   }
-  console.log("coso", projecte);
 
   return (
-    <>
-      <h1>Llista de Tasques</h1>
+    <div className="col-start-1 col-end-8 shadow-lg shadow-neutral-800 bg-white bg-opacity-90 p-8 pb-12 border-2 border-neutral-600 rounded-md text-center m-10 gap-2">
+      
+      <h1 className="text-2xl bold">Llista de Tasques</h1>
       <button
-        className="border p-3 bg-red-200"
+        className="rounded-md px-4 py-2 my-8 shadow-md shadow-neutral-800 bg-emerald-400 text-white hover:bg-emerald-600"
         onClick={() => redirect("/issue/new/" + `${id}`)}
       >
-        Nou
+        Nova Tasca
       </button>
+      <Modal projecteModal={projecteModal} setModal={setModal} modal={modal} />
 
       <DndProvider backend={HTML5Backend}>
-        <div className="grid grid-cols-3 grid-rows-2">
+        <div className="grid grid-cols-3 border border-amber-400 rounded-lg shadow-md shadow-slate-300">
           {CAIXES.map((caixa) => (
             <Box key={caixa.state} caixa={caixa} mouItem={mouItem}>
-              {projecte
-                .filter((e) => e.state == caixa.state)
+              {projecte?.filter((e) => e.state == caixa.state)
                 .map((e) => (
-                  <Item key={e.id} eliminaItem={eliminaItem} data={e} />
+                  
+                  <Item key={e.id} eliminaItem={eliminaItem} data={e} setModal={setModal}/>
                 ))}
             </Box>
           ))}
         </div>
       </DndProvider>
-    </>
+    </div>
   );
 };
 

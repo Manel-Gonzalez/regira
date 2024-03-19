@@ -54,7 +54,7 @@ export default () => {
 
 
     return (
-        <div className="w-full max-w-xs m-auto">
+        <div className="col-start-2 col-end-7 w-full max-w-xs m-auto">
             <form onSubmit={nouProjecte} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h1 className="text-center">Nou Projecte</h1>
             <div className="mb-4">

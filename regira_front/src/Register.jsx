@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-
 import { useNavigate } from "react-router-dom";
 import Contexte from "./Contexte";
 
@@ -45,12 +44,15 @@ export default () => {
   };
 
   return (
-    <div className="w-full max-w-xs m-auto">
+    <div className="col-start-2 col-end-7 max-w-xs m-auto shadow-lg shadow-neutral-800  rounded-md border-2 border-amber-400">
       <form
         onSubmit={registra}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-md rounded p-8"
       >
-        <h1 className="text-center">Register</h1>
+        <div className="flex flex-row justify-between">
+        <button className="text-md font-bold border-2 border-slate-500 shadow shadow-slate-500" onClick={()=> redirect(-1)}>BACK</button>
+        <h1 className="text-center text-2xl font-rock font-bold">Register</h1>
+        </div>
         <div className="mb-4">
           <label
             className=" text-gray-700 text-sm font-bold mb-2"
@@ -68,7 +70,8 @@ export default () => {
           />
         </div>
         <div>
-          <label htmlFor="name">Name</label>
+          <label className=" text-gray-700 text-sm font-bold mb-2"
+ htmlFor="name">Name</label>
           <input
             onInput={(e) => setName(e.target.value)}
             value={name}
@@ -98,12 +101,15 @@ export default () => {
           />
         </div>
 
-        <div className="text-center">
+        <div className="text-center flex flex-row gap-4 justify-center">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="shadow-md shadow-neutral-800 bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Entrar
+            Enviar
+          </button>
+          <button className="shadow-md shadow-neutral-800 bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={()=>redirect('/login')}>
+            Iniciar Sesion
           </button>
         </div>
       </form>

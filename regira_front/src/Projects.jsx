@@ -39,10 +39,11 @@ export default () => {
         return <h1 className='text-red-500'>{error}</h1>
     }
 
-    return (<>
-        <h1>Llista de projectes</h1>
+    return (
+    <div className='col-start-2 col-end-7 bg-gray-100/50  bg-opacity-60 p-4 border-2 border-neutral-600 rounded text-center my-6'>
+        <h1 className='text-2xl bold'>Llista de projectes</h1>
+        <button className=" rounded-md px-4 py-2 my-8 shadow-md shadow-neutral-800 bg-emerald-400 text-white hover:bg-emerald-600" onClick={()=>redirect('/project/new')}>Crear Projecte</button>
 
-        <button className="border p-3 bg-red-200" onClick={()=>redirect('/project/new')}>Nou</button>
         <br />
         <br />
         <div className="flex flex-col">
@@ -62,7 +63,7 @@ export default () => {
                             </thead>
                             <tbody>
 
-                                {projectes.map(projecte =>
+                                {projectes?.map(projecte =>
                                 (<tr key={projecte.id} className="border-b border-neutral-200 ">
                                     <td className="whitespace-nowrap px-6 py-4 font-medium">{projecte.id}</td>
                                     <td className="whitespace-nowrap px-6 py-4">{projecte.name}</td>
@@ -79,7 +80,8 @@ export default () => {
         </div>
 
 
-    </>)
+    </div>
+    )
 
 
 

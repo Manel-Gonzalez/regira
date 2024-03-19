@@ -1,12 +1,12 @@
-import { useState, useContext, useEffect } from "react";
+import {useState, useContext, useEffect} from "react";
 
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Contexte from "./Contexte";
 
 const API_URL = "http://localhost:3000/api";
 
 export default () => {
-  const { logout } = useContext(Contexte);
+  const {logout} = useContext(Contexte);
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -14,9 +14,8 @@ export default () => {
   const [priority, setPriority] = useState("Medium");
   const [state, setState] = useState("ready");
   const redirect = useNavigate();
-  const { projectId } = useParams();
-  const { loguejat } = useContext(Contexte);
-
+  const {projectId} = useParams();
+  const {loguejat} = useContext(Contexte);
 
   const nouIssue = (e) => {
     e.preventDefault();
@@ -29,7 +28,7 @@ export default () => {
       issue_type,
       priority,
       state,
-      projectId 
+      projectId,
     };
 
     const opcions = {
@@ -53,12 +52,13 @@ export default () => {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={nouIssue}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
-        <h1 className="text-center">Nova Tasca</h1>
+    <div className="col-start-2 col-end-7 flex flex-col  bg-white rounded px-8 pt-6 pb-8 mb-4 border-2 border-neutral-400 shadow-md shadow-neutral-500 bg-opacity-80">
+      <form onSubmit={nouIssue} className="">
+        <div className="grid grid-cols-4 mb-8">
+          <h1 className="text-center col-span-2 mb-3 text-xl font-bold">
+            Nova Tasca
+          </h1>
+        </div>
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -82,63 +82,77 @@ export default () => {
           >
             Descripció
           </label>
-          <input
+          <textarea
             onInput={(e) => setDesc(e.target.value)}
             value={desc}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className=" box-border h-32 shadow appearance-none border rounded w-full py-2 px-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="desc"
             type="text"
             placeholder="Descripció...."
           />
         </div>
-        <div className="mb-4">
-          <label for="issue_type">Tipo de Tarea</label>
 
-          <select
-            name="issue_type"
-            id="issue_type"
-            value={issue_type}
-            onInput={(e) => setIssueType(e.target.value)}
-          >
-            <option value="story">Story</option>
-            <option value="bugs">Bugs</option>
-            <option value="general">General</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label for="priority">Prioridad</label>
+        <div className="flex flex-row  w-fit gap-2">
+          <div className="mb-4">
+            <label htmlFor="issue_type">Tipo de Tarea</label>
 
-          <select
-            name="priority"
-            id="priority"
-            value={priority}
-            onInput={(e) => setPriority(e.target.value)}
-          >
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label for="state">Estado</label>
+            <select
+              name="issue_type"
+              id="issue_type"
+              value={issue_type}
+              className="border rounded mx-4 p-2"
+              onInput={(e) => setIssueType(e.target.value)}
+            >
+              <option value="story">Story</option>
+              <option value="bugs">Bugs</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="priority">Prioridad</label>
 
-          <select
-            name="state"
-            id="state"
-            value={state}
-            onInput={(e) => setState(e.target.value)}
-          >
-            <option value="backlog">Backlog</option>
-            <option value="ready">Ready</option>
-            <option value="in_progress">In Progress</option>
-            <option value="review">Review</option>
-            <option value="testing">Testing</option>
-            <option value="done">Done</option>
-          </select>
+            <select
+              name="priority"
+              id="priority"
+              value={priority}
+              className="border rounded mx-4 p-2"
+              onInput={(e) => setPriority(e.target.value)}
+            >
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="state">Estado</label>
+
+            <select
+              name="state"
+              id="state"
+              value={state}
+              className="border rounded mx-4 p-2"
+              onInput={(e) => setState(e.target.value)}
+            >
+              <option value="backlog">Backlog</option>
+              <option value="ready">Ready</option>
+              <option value="in_progress">In Progress</option>
+              <option value="review">Review</option>
+              <option value="testing">Testing</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
         </div>
-        <div>
+
+        <div className="flex flex-row justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="text-md w-fit col-span-1 font-bold border-2 border-slate-500 shadow shadow-slate-500 rounded-md p-2 hover:bg-slate-200"
+            onClick={() => redirect(-1)}
+          >
+            Atras
+          </button>
+
+          <button
+            className="text-center p-2  rounded-md shadow-md shadow-neutral-800 bg-emerald-400 text-white  hover:bg-emerald-600"
             type="submit"
           >
             Crear

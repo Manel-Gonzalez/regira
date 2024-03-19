@@ -8,7 +8,7 @@ import NouIssue from './NouIssue.jsx';
 import Kanban from './Kanban.jsx';
 import NouProjecte from './NouProjecte.jsx';
 
-import { BrowserRouter, Routes, Route, } from "react-router-dom";
+import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
 
 import './index.css'
 
@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />}>
 
-          <Route path="/login" element={<Login />} />
+          <Route index path="/login" element={<Login />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/register" element={<Register />} />
           <Route path="/issue/new/:projectId" element={<NouIssue />} />

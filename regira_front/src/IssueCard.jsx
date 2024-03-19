@@ -1,30 +1,76 @@
-const State = ({value}) => <h2>{value}</h2> 
-const Priority = ({value}) => <h2>{value}</h2> 
-const Type = ({value}) => <h2>{value}</h2> 
+import {useState, useContext, useEffect} from "react";
 
-const getColorByType  = ({type}) => {
+
+
+
+const Priority = ({value}) => <h2>Priority: {value}</h2> 
+const Type = ({value}) => <h2>Type: {value}</h2> 
+const Desc = ({value}) =>  (value === null ? <p>Sin descripcion</p> : <p>Descripcion: {value}</p>);
+/* 
+(!{value} ? <p>Sin descripcion</p> : <p>Descripcion: {value}</p>) 
+*/
+
+
+const getColorByType  = ({issue_type}) => {
     
-    if (type==='bug'){
-        return 'bg-red-400';
-    } else if (type==='feature'){
-        return 'bg-green-400';
+    if (issue_type==='bugs'){
+        return 'shadow-md shadow-red-400 border-red-400';
+    } else if (issue_type==='general'){
+        return 'shadow-md shadow-green-400 border-green-400';
     } else { // task
-        return 'bg-blue-400'
+        return 'shadow-md shadow-blue-400 border-blue-400'
     }
 }
 
+export default ({data, reference, isDragging, remove,setModal}) =>  {
+    const [open, setOpen] = useState(false);
 
-export default ({data, reference, isDragging, remove}) =>  {
+    const handleOpen = () => {
+      setOpen(!open);
+    };
+  
 
     return (
         <>
-            <div ref = {reference}  className={"border p-2 m-3 "+getColorByType(data)}>
-                <h1>{data.title} {data.id}</h1>
-                <Type value={data.type} />
+
+        <div >
+
+
+            <div ref = {reference}  className={"flex flex-col gap-2 border-2 m-3 rounded-md bg-white hover:scale-110 hover:transform hover:transition hover:duration-300  "+getColorByType(data)}>
+                <div className="grid grid-cols-4 border-b-2 p-2 justify-between  bg-white">
+
+                    <h1 className="text-lg col-span-3 font-semibold">{data.title}</h1>
+                    <div className="bg-slate-500 w-fit flex flex-row gap-4">
+
+                        <button onClick={handleOpen} className="p-4">:</button>
+                        {open ? (
+                            <ul className="">
+                            <li className="hover:bg-slate-100">
+                                <button onClick={()=> setModal(data.id)}>+ Info</button>
+                            </li>
+                            <li className="hover:bg-slate-100">
+                                <button>Modificar</button>
+                            </li>
+                            <li className="hover:bg-slate-100">
+                                <button onClick={()=>remove(data)}>Borrar</button>
+                            </li>
+                            </ul>
+                        ) : null}
+                    </div>
+                </div>
+                <Type value={data.issue_type} />
                 <Priority value={data.priority} />
-                <State value={data.state} />
-                <button className="border p-2 bg-red-600 text-white" onClick={()=>remove(data)}>Elimina</button>
+                <Desc value={data.desc}></Desc>
+             
             </div>
+
+        </div>
+  
+
         </>
     )
 }
+/*
+                 <div className="grid grid-cols-5 border-b-2 p-2 justify-between  bg-white">
+
+*/
